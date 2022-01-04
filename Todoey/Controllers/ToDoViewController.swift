@@ -11,11 +11,17 @@ import UIKit
 class ToDoViewController: UITableViewController {
     
     var itemArray = [Item]()
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory,
+    in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+  //  let defaults = UserDefaults.standard
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+      //  print(dataFilePath)
         
         let newItem = Item()
         newItem.title = "Find Nemo"
@@ -31,9 +37,9 @@ class ToDoViewController: UITableViewController {
         
       
         
-        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
+//            itemArray = items
+//        }
         
     }
 
@@ -66,7 +72,7 @@ class ToDoViewController: UITableViewController {
      
         
         
-        tableView.reloadData()
+        saveItems()
         
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -90,9 +96,9 @@ class ToDoViewController: UITableViewController {
             
             self.itemArray.append(newItem)
             
-            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+     //       self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             
-            self.tableView.reloadData()
+            self.saveItems()
             
             
         }
@@ -105,6 +111,20 @@ class ToDoViewController: UITableViewController {
     
         self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    func saveItems()  {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding item array, \(error)")
+        }
+        
+        
+        self.tableView.reloadData()
     }
     
 }
