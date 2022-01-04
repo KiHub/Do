@@ -12,18 +12,19 @@
         <scene sceneID="ufQ-wU-Iza">
             <objects>
                 <tableViewController id="JHd-XA-1zx" customClass="ToDoViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CJa-l0-iov">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CJa-l0-iov">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoItemCell" id="sbS-tv-hNc">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sbS-tv-hNc" id="2D2-gx-Igh">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="tintColor" red="0.31000423430000001" green="0.39183464649999999" blue="0.41568851470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -31,7 +32,14 @@
                             <outlet property="delegate" destination="JHd-XA-1zx" id="ljS-kh-CIL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="To Do" id="EtQ-Og-t3p"/>
+                    <navigationItem key="navigationItem" title="To Do" id="EtQ-Og-t3p">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="vsg-Bl-epO">
+                            <color key="tintColor" red="0.18823529410000001" green="0.2666666667" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="JHd-XA-1zx" id="Lwf-lL-xFC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adw-ks-dZl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
