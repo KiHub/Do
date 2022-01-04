@@ -31,9 +31,9 @@ class ToDoViewController: UITableViewController {
         
       
         
-//        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
-//            itemArray = items
-//        }
+        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
+            itemArray = items
+        }
         
     }
 
