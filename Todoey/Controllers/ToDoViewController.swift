@@ -23,19 +23,21 @@ class ToDoViewController: UITableViewController {
         
       //  print(dataFilePath)
         
-        let newItem = Item()
-        newItem.title = "Find Nemo"
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.title = "Buy Apple"
-        itemArray.append(newItem2)
-        
-        let newItem3 = Item()
-        newItem3.title = "Say Hello"
-        itemArray.append(newItem3)
+//        let newItem = Item()
+//        newItem.title = "Find Nemo"
+//        itemArray.append(newItem)
+//        
+//        let newItem2 = Item()
+//        newItem2.title = "Buy Apple"
+//        itemArray.append(newItem2)
+//        
+//        let newItem3 = Item()
+//        newItem3.title = "Say Hello"
+//        itemArray.append(newItem3)
         
       
+        
+        loadItems()
         
 //        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
 //            itemArray = items
@@ -63,6 +65,7 @@ class ToDoViewController: UITableViewController {
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         print("Do, \(itemArray[indexPath.row])")
         
      
@@ -125,6 +128,18 @@ class ToDoViewController: UITableViewController {
         
         
         self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decoding item, \(error)")
+            }
+            
+        }
     }
     
 }
