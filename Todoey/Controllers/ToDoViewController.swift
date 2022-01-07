@@ -47,6 +47,8 @@ class ToDoViewController: UITableViewController {
 //        }
         
     }
+    
+    //MARK: - Tableview Datasource Methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -67,6 +69,9 @@ class ToDoViewController: UITableViewController {
         
         return cell
     }
+    
+    //MARK: - Tableview Delegate Methods
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
      //   print("Do, \(itemArray[indexPath.row])")
@@ -90,6 +95,7 @@ class ToDoViewController: UITableViewController {
        
     }
     
+    //MARK: - Add New Items
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -128,6 +134,8 @@ class ToDoViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
         
     }
+    
+    //MARK: - Model Manipulation Methods
     
     func saveItems()  {
       
