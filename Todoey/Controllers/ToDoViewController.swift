@@ -165,6 +165,7 @@ class ToDoViewController: UITableViewController {
     
 }
 //MARK: - Search bar methods
+
 extension ToDoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
@@ -179,14 +180,7 @@ extension ToDoViewController: UISearchBarDelegate {
         
         loadItems(with: request)
         
-//        do {
-//        itemArray = try context.fetch(request)
-//        } catch {
-//            print("Error fetching data from context, \(error)")
-//        }
-        
-      //  tableView.reloadData()
-     //   print(searchBar.text)
+
         
     }
     
