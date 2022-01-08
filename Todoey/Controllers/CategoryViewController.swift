@@ -13,7 +13,7 @@ import CoreData
 
 class CategoryViewController: UITableViewController {
     
-    var categoryArray = [Category]()
+    var categoryArray = [`Category`]()
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -104,7 +104,6 @@ class CategoryViewController: UITableViewController {
       
         
         do {
-        
            try context.save()
         } catch {
          print("Error saving context, \(error)")
