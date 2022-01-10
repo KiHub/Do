@@ -20,20 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        let data = Data()
-        data.name = "Kirill"
-        data.age = 33
-        
-        do {
-        let realm = try Realm()
-           try realm.write {
-                realm.add(data)
-            }
-        } catch {
-            print("Error initialising new realm, \(error)")
-        }
-        
-       
+//        let data = Data()
+//        data.name = "Kirill"
+//        data.age = 33
+//        
+//        do {
+//        let realm = try Realm()
+//         //  try realm.write {
+//         //       realm.add(data)
+//            }
+//        } catch {
+//            print("Error initialising new realm, \(error)")
+//        }
+//        
+//       
         
         
         return true
