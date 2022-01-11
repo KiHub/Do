@@ -91,7 +91,8 @@ class ToDoViewController: UITableViewController {
         if let item = todoItems?[indexPath.row] {
             do {
             try realm.write {
-                item.done = !item.done
+     //           realm.delete(item)
+                             item.done = !item.done
             }
             } catch {
                 print("Error saving done status, \(error)")
@@ -139,6 +140,7 @@ class ToDoViewController: UITableViewController {
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
+                        newItem.dateCreated = Date()
                             currentCategory.items.append(newItem)
                     }
                 } catch {
@@ -193,15 +195,20 @@ class ToDoViewController: UITableViewController {
 
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
 
-
+        tableView.reloadData()
     }
 //
     
 }
 //MARK: - Search bar methods
 
-//extension ToDoViewController: UISearchBarDelegate {
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+extension ToDoViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        
+        tableView.reloadData()
+        
 //        let request : NSFetchRequest<Item> = Item.fetchRequest()
 //
 //        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
@@ -213,22 +220,23 @@ class ToDoViewController: UITableViewController {
 //        request.sortDescriptors = [sortDescriptor]
 //
 //        loadItems(with: request, predicate: predicate)
-//
-//
-//
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//
-//
-//            loadItems()
-//                     DispatchQueue.main.async {
-//                         searchBar.resignFirstResponder()
-//                     }
-//
-//        }
-//    }
-//
-//}
+
+
+
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+
+
+            loadItems()
+            
+                     DispatchQueue.main.async {
+                         searchBar.resignFirstResponder()
+                     }
+
+        }
+    }
+
+}
 
