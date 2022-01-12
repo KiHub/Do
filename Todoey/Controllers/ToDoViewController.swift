@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ToDoViewController: UITableViewController {
+class ToDoViewController: SwipeViewController {
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
@@ -46,6 +46,7 @@ class ToDoViewController: UITableViewController {
 //        newItem3.title = "Say Hello"
 //        itemArray.append(newItem3)
         
+        tableView.rowHeight = 80
        
         
       //  loadItems()
@@ -63,16 +64,16 @@ class ToDoViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+ //       let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
-        if let item = todoItems?[indexPath.row] {
-            cell.textLabel?.text = item.title
-            cell.accessoryType = item.done ? .checkmark : .none
-        } else {
-            cell.textLabel?.text = "No items added"
-        }
-        
-     
+//        if let item = todoItems?[indexPath.row] {
+//            cell.textLabel?.text = item.title
+//            cell.accessoryType = item.done ? .checkmark : .none
+//        } else {
+//            cell.textLabel?.text = "No items added"
+//        }
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        cell.textLabel?.text = todoItems?[indexPath.row].title ?? "No categories added yet"
 //
 //        if itemArray[indexPath.row].done == true {
 //            cell.accessoryType = .checkmark
@@ -197,8 +198,24 @@ class ToDoViewController: UITableViewController {
 
         tableView.reloadData()
     }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        
+                    if let itemForDeletion = self.todoItems?[indexPath.row] {
+        
+                    do {
+                        try self.realm.write {
+                            self.realm.delete(itemForDeletion)
+                        }
+                    } catch {
+                     print("Error delete data, \(error)")
+                    }
+                    }
+    
 //
     
+}
 }
 //MARK: - Search bar methods
 
@@ -239,4 +256,5 @@ extension ToDoViewController: UISearchBarDelegate {
     }
 
 }
+
 
