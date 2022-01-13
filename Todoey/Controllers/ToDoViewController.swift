@@ -15,6 +15,7 @@ class ToDoViewController: SwipeViewController {
     var todoItems: Results<Item>?
     let realm = try! Realm()
     
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var selectedCategory : Category? {
         didSet {
@@ -50,12 +51,47 @@ class ToDoViewController: SwipeViewController {
         tableView.rowHeight = 80
         tableView.separatorStyle = .none
         
+        
+        
+        
+      
+        
       //  loadItems()
         
 //        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
 //            itemArray = items
 //        }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+        
+        if let colourHex = selectedCategory?.colour {
+            
+            title = selectedCategory!.name
+            
+            guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+            
+         //   navBar.backgroundColor = UIColor(hexString: colourHex)
+            
+       //     if let navBarColor = UIColor(hexString: colourHex) {
+       //   navBar.tintColor = ContrastColorOf(backgroundColor: UIColor(hexString: colourHex), returnFlat: true)
+            navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(backgroundColor: UIColor(hexString: colourHex), returnFlat: true)]
+            
+            let app = UINavigationBarAppearance()
+            app.backgroundColor = UIColor(hexString: colourHex)
+            self.navigationController?.navigationBar.scrollEdgeAppearance = app
+            navigationController?.navigationBar.standardAppearance = app
+            
+            searchBar.barTintColor =  UIColor(hexString: colourHex)
+            searchBar.searchTextField.backgroundColor = .systemGray
+         //   navigationController?.navigationBar.largeTitleTextAttributes.t
+        //    title.colo
+            
+            
+        }
     }
     
     //MARK: - Tableview Datasource Methods
