@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class ToDoViewController: SwipeViewController {
     
@@ -47,7 +48,7 @@ class ToDoViewController: SwipeViewController {
 //        itemArray.append(newItem3)
         
         tableView.rowHeight = 80
-       
+        tableView.separatorStyle = .none
         
       //  loadItems()
         
@@ -72,8 +73,23 @@ class ToDoViewController: SwipeViewController {
 //        } else {
 //            cell.textLabel?.text = "No items added"
 //        }
+     //   selectedCategory?.colour
+        let categoruColour =  UIColor(hexString: selectedCategory?.colour ?? "#f3f6f4")
+        
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.textLabel?.text = todoItems?[indexPath.row].title ?? "No categories added yet"
+        
+        if let item = todoItems?[indexPath.row] {
+        
+        cell.textLabel?.text = item.title // ?? "No categories added yet"
+        
+            if let colour = categoruColour.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count) ) {
+        
+        cell.backgroundColor = colour //?? "#e8afa8"
+                cell.textLabel?.textColor = ContrastColorOf(backgroundColor: colour, returnFlat: true)
+                
+            
+        }
+        }
 //
 //        if itemArray[indexPath.row].done == true {
 //            cell.accessoryType = .checkmark
