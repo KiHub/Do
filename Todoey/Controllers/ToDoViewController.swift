@@ -8,12 +8,14 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class ToDoViewController: SwipeViewController {
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
     
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var selectedCategory : Category? {
         didSet {
@@ -47,7 +49,12 @@ class ToDoViewController: SwipeViewController {
 //        itemArray.append(newItem3)
         
         tableView.rowHeight = 80
-       
+        tableView.separatorStyle = .none
+        
+        
+        
+        
+      
         
       //  loadItems()
         
@@ -55,6 +62,36 @@ class ToDoViewController: SwipeViewController {
 //            itemArray = items
 //        }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+        
+        if let colourHex = selectedCategory?.colour {
+            
+            title = selectedCategory!.name
+            
+            guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+            
+         //   navBar.backgroundColor = UIColor(hexString: colourHex)
+            
+       //     if let navBarColor = UIColor(hexString: colourHex) {
+       //   navBar.tintColor = ContrastColorOf(backgroundColor: UIColor(hexString: colourHex), returnFlat: true)
+            navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(backgroundColor: UIColor(hexString: colourHex), returnFlat: true)]
+            
+            let app = UINavigationBarAppearance()
+            app.backgroundColor = UIColor(hexString: colourHex)
+            self.navigationController?.navigationBar.scrollEdgeAppearance = app
+            navigationController?.navigationBar.standardAppearance = app
+            
+            searchBar.barTintColor =  UIColor(hexString: colourHex)
+            searchBar.searchTextField.backgroundColor = .systemGray
+         //   navigationController?.navigationBar.largeTitleTextAttributes.t
+        //    title.colo
+            
+            
+        }
     }
     
     //MARK: - Tableview Datasource Methods
@@ -72,8 +109,23 @@ class ToDoViewController: SwipeViewController {
 //        } else {
 //            cell.textLabel?.text = "No items added"
 //        }
+     //   selectedCategory?.colour
+        let categoruColour =  UIColor(hexString: selectedCategory?.colour ?? "#f3f6f4")
+        
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.textLabel?.text = todoItems?[indexPath.row].title ?? "No categories added yet"
+        
+        if let item = todoItems?[indexPath.row] {
+        
+        cell.textLabel?.text = item.title // ?? "No categories added yet"
+        
+            if let colour = categoruColour.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count) ) {
+        
+        cell.backgroundColor = colour //?? "#e8afa8"
+                cell.textLabel?.textColor = ContrastColorOf(backgroundColor: colour, returnFlat: true)
+                
+            
+        }
+        }
 //
 //        if itemArray[indexPath.row].done == true {
 //            cell.accessoryType = .checkmark

@@ -34,8 +34,28 @@ class CategoryViewController: SwipeViewController {
         
         tableView.separatorStyle = .none
 
+       
+        
+//        if #available(iOS 13.0, *) {
+//            let navBarAppearance = UINavigationBarAppearance()
+//            navBarAppearance.configureWithOpaqueBackground()
+//            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//            navBarAppearance.backgroundColor = #colorLiteral(red: 0.28762573, green: 0.3948598504, blue: 0.4191849828, alpha: 1)
+//            UINavigationBar.standardAppearance = navBarAppearance
+//            UINavigationBar.scrollEdgeAppearance = navBarAppearance
+//            UINavigationBarAppearance.scr
+//        }
+      //  UINavigationBar
 
     }
+    override func viewWillAppear(_ animated: Bool) {
+        let app = UINavigationBarAppearance()
+        app.backgroundColor = #colorLiteral(red: 0.28762573, green: 0.3948598504, blue: 0.4191849828, alpha: 1)
+        self.navigationController?.navigationBar.scrollEdgeAppearance = app
+        navigationController?.navigationBar.standardAppearance = app
+    }
+    
     //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -48,12 +68,22 @@ class CategoryViewController: SwipeViewController {
         
 
         cell.textLabel?.text = categories?[indexPath.row].name ??  "No categories added yet"
+        
+     //   guard let categoryColour = UIColor(hexString: categories?[indexPath.row].colour
+      //        else { fatalError() }
             
         cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colour ?? "#e8afa8")
-
+     //   cell.textLabel?.textColor = ContrastColorOf(backgroundColor: categories?[indexPath.row].colour, returnFlat: true)
     //    cell.backgroundColor = UIColor(hexString: (categories?[indexPath.row].color) ?? "#e8afa8")
    //     UIColor.hexValue(categories?[indexPath.row].color) ?? UIColor.red
      //   UIColor.hexValue(<#T##self: UIColor##UIColor#>)
+        
+//        let categoruColour =  UIColor(hexString: selectedCategory?.colour ?? "#f3f6f4")
+//        if let colour = categoruColour.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count) ) {
+//    
+//    cell.backgroundColor = colour //?? "#e8afa8"
+//            cell.textLabel?.textColor = ContrastColorOf(backgroundColor: colour, returnFlat: true)
+//            
         
         return cell
     }
