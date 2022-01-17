@@ -51,6 +51,7 @@ class ToDoViewController: SwipeViewController {
         tableView.rowHeight = 80
         tableView.separatorStyle = .none
         
+      //  self.navigationController.navigationBar.largeTitleTextAttributes = @do {NSAttributedString.Key.foregroundColor: };
         
         
         
@@ -71,6 +72,8 @@ class ToDoViewController: SwipeViewController {
         if let colourHex = selectedCategory?.colour {
             
             title = selectedCategory!.name
+            
+            
             
             guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
             
@@ -117,12 +120,14 @@ class ToDoViewController: SwipeViewController {
         if let item = todoItems?[indexPath.row] {
         
         cell.textLabel?.text = item.title // ?? "No categories added yet"
+            cell.accessoryType = item.done ? .checkmark : .none
+            
         
-            if let colour = categoruColour.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count) ) {
+            if let colour = categoruColour.lighten(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count) ) {
         
         cell.backgroundColor = colour //?? "#e8afa8"
                 cell.textLabel?.textColor = ContrastColorOf(backgroundColor: colour, returnFlat: true)
-                
+                cell.accessoryView?.tintColor = ContrastColorOf(backgroundColor: colour, returnFlat: true)
             
         }
         }
@@ -184,7 +189,7 @@ class ToDoViewController: SwipeViewController {
         
         let alert = UIAlertController(title: "Add new task", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add item", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add task", style: .default) { (action) in
             
           //  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
             
@@ -217,12 +222,18 @@ class ToDoViewController: SwipeViewController {
             
             
         }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: {
+            action in
+                
+        })
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new task"
             textField = alertTextField
            
         }
         alert.addAction(action)
+        alert.addAction(cancel)
     
         self.present(alert, animated: true, completion: nil)
         
@@ -246,7 +257,9 @@ class ToDoViewController: SwipeViewController {
 //
     func loadItems() {
 
-        todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+     //   todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+        
+        todoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: false)
 
         tableView.reloadData()
     }
