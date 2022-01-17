@@ -34,7 +34,7 @@ class CategoryViewController: SwipeViewController {
         
         tableView.separatorStyle = .none
 
-       
+
         
 //        if #available(iOS 13.0, *) {
 //            let navBarAppearance = UINavigationBarAppearance()
@@ -52,8 +52,10 @@ class CategoryViewController: SwipeViewController {
     override func viewWillAppear(_ animated: Bool) {
         let app = UINavigationBarAppearance()
         app.backgroundColor = #colorLiteral(red: 0.28762573, green: 0.3948598504, blue: 0.4191849828, alpha: 1)
+        
         self.navigationController?.navigationBar.scrollEdgeAppearance = app
         navigationController?.navigationBar.standardAppearance = app
+        
     }
     
     //MARK: - TableView Datasource Methods
@@ -80,10 +82,10 @@ class CategoryViewController: SwipeViewController {
         
 //        let categoruColour =  UIColor(hexString: selectedCategory?.colour ?? "#f3f6f4")
 //        if let colour = categoruColour.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count) ) {
-//    
+//
 //    cell.backgroundColor = colour //?? "#e8afa8"
 //            cell.textLabel?.textColor = ContrastColorOf(backgroundColor: colour, returnFlat: true)
-//            
+//
         
         return cell
     }
@@ -118,9 +120,9 @@ class CategoryViewController: SwipeViewController {
         
         let alert = UIAlertController(title: "Add new category", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add category", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-         
+        
             
          //   let hex = UIColor.randomFlat()?.hexValue()
            
@@ -129,7 +131,12 @@ class CategoryViewController: SwipeViewController {
             
             
             newCategory.name = textField.text!
-            newCategory.colour = UIColor.randomFlat().hexValue()
+         //   newCategory.colour = UIColor.randomFlat().hexValue()
+            
+            
+            newCategory.colour = UIColor(randomFlatColorOf:.dark)?.hexValue() ?? "#e8afa8"
+            
+
             
             
         //    self.categories.append(newCategory)
@@ -140,12 +147,20 @@ class CategoryViewController: SwipeViewController {
             
             
         }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: {
+            action in
+                
+        })
+        
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new category"
             textField = alertTextField
            
         }
         alert.addAction(action)
+        
+        alert.addAction(cancel)
     
         self.present(alert, animated: true, completion: nil)
         
@@ -162,7 +177,7 @@ class CategoryViewController: SwipeViewController {
         
         do {
             try realm.write {
-            realm.add(category)
+                realm.add(category)
                
             }
         } catch {
