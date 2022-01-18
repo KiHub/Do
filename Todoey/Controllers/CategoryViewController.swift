@@ -75,6 +75,9 @@ class CategoryViewController: SwipeViewController {
       //        else { fatalError() }
             
         cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colour ?? "#e8afa8")
+      //  cell.layer.cornerRadius = 20
+      //  cell.layer.masksToBounds = true
+    
      //   cell.textLabel?.textColor = ContrastColorOf(backgroundColor: categories?[indexPath.row].colour, returnFlat: true)
     //    cell.backgroundColor = UIColor(hexString: (categories?[indexPath.row].color) ?? "#e8afa8")
    //     UIColor.hexValue(categories?[indexPath.row].color) ?? UIColor.red
@@ -134,9 +137,9 @@ class CategoryViewController: SwipeViewController {
          //   newCategory.colour = UIColor.randomFlat().hexValue()
             
             
-            newCategory.colour = UIColor(randomFlatColorOf:.dark)?.hexValue() ?? "#e8afa8"
+            newCategory.colour = UIColor(randomFlatColorOf:.light)?.hexValue() ?? "#e8afa8"
             
-
+            newCategory.dateCreatedCategory = Date()
             
             
         //    self.categories.append(newCategory)
@@ -190,7 +193,9 @@ class CategoryViewController: SwipeViewController {
     
     func loadCategory() {
 
-        categories = realm.objects(Category.self)
+    //    categories = realm.objects(Category.self)
+        categories = realm.objects(Category.self).sorted(byKeyPath: "dateCreatedCategory", ascending: false)
+      //  categories = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: false)
         
 //        do {
 //        categoryArray = try context.fetch(request)
